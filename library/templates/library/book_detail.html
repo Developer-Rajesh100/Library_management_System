@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% block title %}
+<title>Book Detail</title> {%endblock %} {% block content %}
+
+<!--Book Detail-->
+<section class="d-flex m-5 justify-content-evenly align-items-center">
+  <div style="max-width: 50%">
+    <img
+      src="{{book.book_img.url}}"
+      style="height: 80vh"
+      class="card-img-top"
+      alt="..."
+    />
+  </div>
+  <div style="max-width: 50%">
+    <h5 class="mb-3">{{book.book_title}}</h5>
+    <p class="card-text">{{book.book_description}}</p>
+    <p class="card-text">
+      <strong>Borrowing Price:</strong> {{book.book_borrowing_price}}
+    </p>
+    <p class="card-text text-center">
+      <small class="text-body-secondary">{{book.book_category}}</small>
+    </p>
+    {% if request.user.is_authenticated %}
+    <form method="post" action="{% url 'library:borrowing' book.id %}">
+      {% csrf_token %}
+      <button style="width: 100%" class="btn btn-warning px-5">
+        Borrow Now
+      </button>
+    </form>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
